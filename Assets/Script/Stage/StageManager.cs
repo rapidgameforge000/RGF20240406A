@@ -25,12 +25,25 @@ namespace Assets.Script.Stage
         {
             this.root = root;
 
-            var stagePrefab = UnityEngine.Resources.Load<UnityEngine.GameObject>("Stage/stage_01");
-            var stage = UnityEngine.Object.Instantiate(stagePrefab, this.root, false);
+            string[] stageNameList = {
+                "Stage/stage_01",
+                "Stage/stage_kame",
+                "Stage/stage_goal",
+            };
+            for (int i  = 0; i < stageNameList.Length; i++)
+            {
+                var stagePrefab = UnityEngine.Resources.Load<UnityEngine.GameObject>(stageNameList[i]);
+                var stage = UnityEngine.Object.Instantiate(stagePrefab, this.root, false);
 
-            this.mainCharacter = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load<MainCharacter.MainCharacter>("MainCharacter/MainCharacter"), this.root, false);
-            obstacleList.AddRange(stage.GetComponentsInChildren<ObstacleObject>());
-            enemyList.AddRange(stage.GetComponentsInChildren<IEnemy>());
+                var position = stage.transform.position;
+                position.x += i * 1920;
+                stage.transform.position = position;
+
+                this.mainCharacter = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load<MainCharacter.MainCharacter>("MainCharacter/MainCharacter"), this.root, false);
+                obstacleList.AddRange(stage.GetComponentsInChildren<ObstacleObject>());
+                enemyList.AddRange(stage.GetComponentsInChildren<IEnemy>());
+            }
+
 
             mainCharacter.Initialize(this);
             foreach (var enemy in enemyList)

@@ -9,7 +9,7 @@ namespace Assets.Script.Enemy
         private Vector2 mVelocity = Vector2.zero;
         private ICollisionChecker mCollisionChecker;
 
-        private const float MOVE_SPEED_X = -6000f;
+        private const float MOVE_SPEED_X = -50000f;
         private const float GRAVITY = -88.9f;
 
 
