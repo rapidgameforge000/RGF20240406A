@@ -27,6 +27,7 @@ namespace Assets.Script.Stage
 
             string[] stageNameList = {
                 "Stage/stage_01",
+                "Stage/stage_kame",
                 "Stage/stage_goal",
             };
             for (int i  = 0; i < stageNameList.Length; i++)
