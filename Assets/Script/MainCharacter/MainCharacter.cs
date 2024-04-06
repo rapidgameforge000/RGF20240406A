@@ -14,6 +14,8 @@ namespace Assets.Script.MainCharacter
         private int BRAKE_VELOCITY = 5;
         [SerializeField]
         private int MAX_VELOCITY = 50;
+        [SerializeField]
+        private int GRAVITY = 50;
 
 
         private RectTransform rectTransform = null;
@@ -23,6 +25,9 @@ namespace Assets.Script.MainCharacter
         private Vector2 velocity = Vector2.zero;
         private int jumpCount = 0;
         private int maxJumpCount = 25;
+
+        [SerializeField]
+        private bool isGround = false;
 
         private void Awake()
         {
@@ -44,7 +49,24 @@ namespace Assets.Script.MainCharacter
         {
             Move(deltaTime);
             CollideEnemy(deltaTime);
-            this.collisionChecker.CollideObstacle(this);
+            CollideObstacle(deltaTime);
+        }
+
+        private bool canJump()
+        {
+            if (isGround && Input.GetKeyDown(KeyCode.Space))
+            {
+                // ジャンプ開始
+                return true;
+            }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                if (jumpCount > 0 && jumpCount < maxJumpCount)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void Move(float deltaTime)
@@ -58,7 +80,7 @@ namespace Assets.Script.MainCharacter
             {
                 this.velocity.x -= MOVE_VELOCITY * deltaTime;
             }
-            if (Input.GetKey(KeyCode.Space) && jumpCount < maxJumpCount)
+            if (canJump())
             {
                 this.velocity.y += JUMP_VELOCITY * deltaTime;
                 ++this.jumpCount;
@@ -79,7 +101,7 @@ namespace Assets.Script.MainCharacter
             }
 
             // 重力
-            this.velocity.y -= JUMP_VELOCITY * deltaTime;
+            this.velocity.y -= GRAVITY * deltaTime;
 
             if (this.velocity.sqrMagnitude > (MAX_VELOCITY * MAX_VELOCITY))
             {
@@ -104,6 +126,26 @@ namespace Assets.Script.MainCharacter
                     break;
                 default:
                     throw new System.Exception();
+            }
+        }
+
+        private void CollideObstacle(float deltaTime)
+        {
+            this.isGround = false;
+            var result = this.collisionChecker.CollideObstacle(this);
+            switch (result)
+            {
+                case ICollisionChecker.CollideObstacleResult.None:
+                    break;
+                case ICollisionChecker.CollideObstacleResult.LeftToRight:
+                    break;
+                case ICollisionChecker.CollideObstacleResult.TopToBottom:
+                    this.isGround = true;
+                    break;
+                case ICollisionChecker.CollideObstacleResult.RightToLeft:
+                    break;
+                case ICollisionChecker.CollideObstacleResult.BottomToTop:
+                    break;
             }
         }
 
