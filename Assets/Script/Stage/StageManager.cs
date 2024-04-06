@@ -29,6 +29,7 @@ namespace Assets.Script.Stage
             string[] stageNameList = {
                 "Stage/stage_start",
                 "Stage/stage_01",
+                "Stage/stage_spike",
                 "Stage/stage_kame",
                 "Stage/stage_student",
                 "Stage/stage_goal",
