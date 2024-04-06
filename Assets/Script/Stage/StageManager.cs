@@ -29,7 +29,7 @@ namespace Assets.Script.Stage
 
             this.mainCharacter = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load<MainCharacter.MainCharacter>("MainCharacter/MainCharacter"), this.root, false);
             obstacleList.AddRange(stage.GetComponentsInChildren<ObstacleObject>());
-            enemyList.AddRange(stage.GetComponentsInChildren<KameEnemy>());
+            enemyList.AddRange(stage.GetComponentsInChildren<IEnemy>());
         }
 
         internal void Process(float deltaTime)
