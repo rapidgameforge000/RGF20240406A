@@ -30,6 +30,12 @@ namespace Assets.Script.Stage
             this.mainCharacter = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load<MainCharacter.MainCharacter>("MainCharacter/MainCharacter"), this.root, false);
             obstacleList.AddRange(stage.GetComponentsInChildren<ObstacleObject>());
             enemyList.AddRange(stage.GetComponentsInChildren<IEnemy>());
+
+            mainCharacter.Initialize(this);
+            foreach (var enemy in enemyList)
+            {
+                enemy.Initialize(this);
+            }
         }
 
         internal void Process(float deltaTime)
@@ -57,18 +63,44 @@ namespace Assets.Script.Stage
                 var nowRect = character.GetRect();
                 var oldRect = nowRect;
                 oldRect.position -= (character.GetVelocity() * this.deltaTime);
-                if (obstacle.GetRect().yMax <= oldRect.yMin)
+                if (character.GetVelocity().y < 0 && obstacle.GetRect().yMax <= oldRect.yMin)
                 {
                     // 着地
                     var newPosition = nowRect.position;
-                    newPosition.y += obstacle.GetRect().yMax - nowRect.yMin;
+                    newPosition.y += obstacle.GetRect().yMax - nowRect.yMin - 0.01f;
                     var newVelocity = character.GetVelocity();
                     newVelocity.y = 0;
                     character.SetPositionVelocity(newPosition, newVelocity);
                 } else
                 {
                     // 衝突
-
+                    if (0 < character.GetVelocity().x && oldRect.xMax < obstacle.GetRect().xMin && obstacle.GetRect().xMin <= nowRect.xMax)
+                    {
+                        // 左から衝突
+                        var newPosition = nowRect.position;
+                        newPosition.x += obstacle.GetRect().xMin - nowRect.xMax - 0.01f;
+                        var newVelocity = character.GetVelocity();
+                        newVelocity.x = 0;
+                        character.SetPositionVelocity(newPosition, newVelocity);
+                    }
+                    else if (character.GetVelocity().x < 0 && obstacle.GetRect().xMax < oldRect.xMin && nowRect.xMin <= obstacle.GetRect().xMax)
+                    {
+                        // 右から衝突
+                        var newPosition = nowRect.position;
+                        newPosition.x += obstacle.GetRect().xMax - nowRect.xMin - 0.01f;
+                        var newVelocity = character.GetVelocity();
+                        newVelocity.x = 0;
+                        character.SetPositionVelocity(newPosition, newVelocity);
+                    }
+                    else if (0 < character.GetVelocity().y && oldRect.yMax < obstacle.GetRect().yMin && obstacle.GetRect().yMin <= nowRect.yMax)
+                    {
+                        // 下から衝突
+                        var newPosition = nowRect.position;
+                        newPosition.y += obstacle.GetRect().yMin - nowRect.yMax - 0.01f;
+                        var newVelocity = character.GetVelocity();
+                        newVelocity.y = 0;
+                        character.SetPositionVelocity(newPosition, newVelocity);
+                    }
                 }
             }
         }

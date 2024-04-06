@@ -17,7 +17,7 @@ namespace Assets.Script.Enemy
         private const float GRAVITY = -1.89f;
 
 
-        void Initialize(ICollisionChecker checker)
+        public void Initialize(ICollisionChecker checker)
         {
             mRectTransform = GetComponent<RectTransform>();
             mCollisionChecker = checker;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Script.Collision
 {
-    internal interface ICollision
+    public interface ICollision
     {
         UnityEngine.Rect GetRect();
 

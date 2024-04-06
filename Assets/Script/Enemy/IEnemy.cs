@@ -10,5 +10,6 @@ namespace Assets.Script.Enemy
 {
     internal interface IEnemy : ICharacter
     {
+        void Initialize(ICollisionChecker checker);
     }
 }

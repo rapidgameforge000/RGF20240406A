@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Script.Character
 {
-    internal interface ICharacter : ICollision
+    public interface ICharacter : ICollision
     {
         UnityEngine.Vector2 GetVelocity();
         void Process(float deltaTime);

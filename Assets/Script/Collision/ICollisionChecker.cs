@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Script.Collision
 {
-    internal interface ICollisionChecker
+    public interface ICollisionChecker
     {
         void CollideObstacle(ICharacter character);
     }
