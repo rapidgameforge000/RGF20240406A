@@ -6,14 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Script.Stage
 {
     internal class StageManager
     {
+        private UnityEngine.Transform root;
         private float deltaTime;
         List<IEnemy> enemyList = new List<IEnemy>();
         List<ICollision> obstacleList = new List<ICollision>();
+
+        internal void Initialize(UnityEngine.Transform root)
+        {
+            this.root = root;
+        }
 
         internal void Process(float deltaTime)
         {
