@@ -15,6 +15,8 @@ namespace Assets.Script.Stage
     {
         private UnityEngine.Transform root;
         private float deltaTime;
+
+        private MainCharacter.MainCharacter mainCharacter;
         List<IEnemy> enemyList = new List<IEnemy>();
         List<ICollision> obstacleList = new List<ICollision>();
 
@@ -25,6 +27,7 @@ namespace Assets.Script.Stage
             var stagePrefab = UnityEngine.Resources.Load<UnityEngine.GameObject>("Stage/stage_01");
             var stage = UnityEngine.Object.Instantiate(stagePrefab, this.root, false);
 
+            this.mainCharacter = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load<MainCharacter.MainCharacter>("MainCharacter/MainCharacter"), this.root, false);
             obstacleList.AddRange(stage.GetComponentsInChildren<ObstacleObject>());
             enemyList.AddRange(stage.GetComponentsInChildren<KameEnemy>());
         }
@@ -32,6 +35,10 @@ namespace Assets.Script.Stage
         internal void Process(float deltaTime)
         {
             this.deltaTime = deltaTime;
+
+
+            this.mainCharacter.Process(deltaTime);
+
             foreach (var enemy in this.enemyList)
             {
                 enemy.Process(deltaTime);
