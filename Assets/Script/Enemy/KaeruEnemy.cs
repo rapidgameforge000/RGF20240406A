@@ -10,9 +10,8 @@ namespace Assets.Script.Enemy
         private Vector2 mVelocity = Vector2.zero;
         private ICollisionChecker mCollisionChecker;
 
-        private float GRAVITY = 5f;
-        private const int JUMP_TIMING = 2;
-        private readonly UnityEngine.Vector2 JUMP_VELOCITY = new UnityEngine.Vector2(-30, 30);
+        private float GRAVITY = 150.0f;
+        private readonly UnityEngine.Vector2 JUMP_VELOCITY = new UnityEngine.Vector2(-150, 300);
 
         public void Initialize(ICollisionChecker checker) {
             mCollisionChecker = checker;
@@ -35,18 +34,19 @@ namespace Assets.Script.Enemy
 
         public Rect GetRect()
         {
-            return mRectTransform.rect;
+            var rect = mRectTransform.rect;
+            rect.center += (UnityEngine.Vector2)mRectTransform.position;
+            return rect;
         }
 
         public void SetPositionVelocity(Vector2 position, Vector2 velocity)
         {
-            mRectTransform.position = position;
             mVelocity = velocity;
-
-            if (velocity.y == 0)
-            {
-                mVelocity += JUMP_VELOCITY;
+            float diff = mRectTransform.position.y - position.y;
+            if ( diff < 0 && velocity.y == 0) {
+                mVelocity = JUMP_VELOCITY;
             }
+            mRectTransform.position = position;
         }
 
         public Vector2 GetVelocity() => this.mVelocity;
