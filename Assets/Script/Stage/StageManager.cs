@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static Assets.Script.Collision.ICollisionChecker;
 
 namespace Assets.Script.Stage
 {
@@ -105,5 +106,29 @@ namespace Assets.Script.Stage
             }
         }
 
+        public CollideResult CollideEnemy(MainCharacter.MainCharacter character)
+        {
+            foreach (var obstacle in this.obstacleList)
+            {
+                if (!ICollision.IsCollide(character, obstacle))
+                {
+                    continue;
+                }
+
+                var nowRect = character.GetRect();
+                var oldRect = nowRect;
+                oldRect.position -= (character.GetVelocity() * this.deltaTime);
+                if (character.GetVelocity().y < 0 && obstacle.GetRect().yMax <= oldRect.yMin)
+                {
+                    // 着地
+                    return CollideResult.Attack;
+                }
+                else
+                {
+                    return CollideResult.Hit;
+                }
+            }
+            return CollideResult.None;
+        }
     }
 }
