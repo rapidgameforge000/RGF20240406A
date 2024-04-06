@@ -19,9 +19,10 @@ namespace Assets.Script.MainCharacter
         private RectTransform rectTransform = null;
         private ICollisionChecker collisionChecker = null;
 
+        [SerializeField]
         private Vector2 velocity = Vector2.zero;
         private int jumpCount = 0;
-        private int maxJumpCount = 10;
+        private int maxJumpCount = 25;
 
         private void Awake()
         {
@@ -42,7 +43,8 @@ namespace Assets.Script.MainCharacter
         public void Process(float deltaTime)
         {
             Move(deltaTime);
-
+            CollideEnemy(deltaTime);
+            this.collisionChecker.CollideObstacle(this);
         }
 
         private void Move(float deltaTime)
@@ -77,38 +79,45 @@ namespace Assets.Script.MainCharacter
             }
 
             // d—Í
-            if (this.rectTransform.position.y > 0)
-            {
-                this.velocity.y -= (MOVE_VELOCITY * deltaTime) / 2;
-            }
-            else
-            {
-                this.velocity.y = 0;
-            }
+            this.velocity.y -= JUMP_VELOCITY * deltaTime;
 
             if (this.velocity.sqrMagnitude > (MAX_VELOCITY * MAX_VELOCITY))
             {
                 this.velocity = this.velocity.normalized * MAX_VELOCITY;
             }
 
-            this.rectTransform.position += new Vector3(this.velocity.x, this.velocity.y);
-            if (this.rectTransform.position.y < 0)
+            this.rectTransform.localPosition += new Vector3(this.velocity.x, this.velocity.y) * deltaTime;
+        }
+
+        private void CollideEnemy(float deltaTime)
+        {
+            var result = this.collisionChecker.CollideEnemy(this);
+
+            switch (result)
             {
-                var pos = this.rectTransform.position;
-                pos.y = 0;
-                this.rectTransform.position = pos;
+                case ICollisionChecker.CollideEnemyResult.None:
+                    break;
+                case ICollisionChecker.CollideEnemyResult.Hit:
+                    break;
+                case ICollisionChecker.CollideEnemyResult.Attack:
+                    this.velocity.y += JUMP_VELOCITY * deltaTime * 5;
+                    break;
+                default:
+                    throw new System.Exception();
             }
         }
 
         public Rect GetRect()
         {
-            return this.rectTransform.rect;
+            var rect = this.rectTransform.rect;
+            rect.center += (Vector2)this.rectTransform.position;
+            return rect;
         }
 
         public void SetPositionVelocity(Vector2 position, Vector2 velocity)
         {
             this.rectTransform.position = position;
-            this.velocity += velocity;
+            this.velocity = velocity;
         }
 
         public Vector2 GetVelocity() => this.velocity;
