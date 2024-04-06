@@ -1,16 +1,31 @@
-namespace Script.Obstacle
+using Assets.Script.Collision;
+
+namespace Assets.Script.Obstacle
 {
-    internal class ObstacleObject : UnityEngine.MonoBehaviour
+    
+    internal class ObstacleObject : UnityEngine.MonoBehaviour, ICollision
     {
-        private UnityEngine.RectTransform _rect_transform;
-        internal void initialize( UnityEngine.RectTransform rect_transform )
+        static internal ObstacleObject load( UnityEngine.Transform transform ) {
+            ObstacleObject prefab = UnityEngine.Resources.Load<ObstacleObject>("Obstacle/obstacle");
+            ObstacleObject instance = Instantiate(prefab, transform);
+            return instance;
+        }
+        
+        internal void initialize( )
+        {
+           
+        }
+
+        internal void process()
         {
             
         }
 
-        internal void update()
-        {
-            
+        public UnityEngine.Vector2 GetPosition() {
+            return transform.localPosition;             
+        }
+        public UnityEngine.Rect GetRect() {
+            return GetComponent<UnityEngine.RectTransform>( ).rect;
         }
 
     }
