@@ -160,7 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2991272448351589507}
   - component: {fileID: 2845405590049222872}
-  - component: {fileID: 3776828061702620921}
+  - component: {fileID: 2541935183055292800}
   m_Layer: 5
   m_Name: GoalEnemy
   m_TagString: Untagged
@@ -197,7 +197,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5328330103059685656}
   m_CullTransparentMesh: 1
---- !u!114 &3776828061702620921
+--- !u!114 &2541935183055292800
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,6 +206,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5328330103059685656}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbada70f0f726db49a186c91c1fe8f04, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a2d8b93b7d3e3348bb5b8111f569745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

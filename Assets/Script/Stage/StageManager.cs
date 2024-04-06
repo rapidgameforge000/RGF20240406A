@@ -127,7 +127,7 @@ namespace Assets.Script.Stage
                 var nowRect = character.GetRect();
                 var oldRect = nowRect;
                 oldRect.position -= (character.GetVelocity() * this.deltaTime);
-                if (character.GetVelocity().y < 0 && enemy.GetRect().yMax < oldRect.yMin && nowRect.yMin <= enemy.GetRect().yMax)
+                if (enemy.IsKillable() && character.GetVelocity().y < 0 && enemy.GetRect().yMax < oldRect.yMin && nowRect.yMin <= enemy.GetRect().yMax)
                 {
                     // 踏んで倒した
                     enemy.Kill();
