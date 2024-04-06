@@ -32,6 +32,7 @@ namespace Assets.Script.Stage
                 "Stage/stage_spike",
                 "Stage/stage_kame",
                 "Stage/stage_student",
+                "Stage/stage_kame_kaeru",
                 "Stage/stage_goal",
             };
             for (int i  = 0; i < stageNameList.Length; i++)
