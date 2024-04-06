@@ -117,7 +117,7 @@ namespace Assets.Script.Stage
 
         public CollideEnemyResult CollideEnemy(MainCharacter.MainCharacter character)
         {
-            foreach (var enemy in this.obstacleList)
+            foreach (var enemy in this.enemyList)
             {
                 if (!ICollision.IsCollide(character, enemy))
                 {
@@ -129,7 +129,9 @@ namespace Assets.Script.Stage
                 oldRect.position -= (character.GetVelocity() * this.deltaTime);
                 if (character.GetVelocity().y < 0 && enemy.GetRect().yMax < oldRect.yMin && nowRect.yMin <= enemy.GetRect().yMax)
                 {
-                    // 着地
+                    // 踏んで倒した
+                    enemy.Kill();
+                    this.obstacleList.Remove(enemy);
                     return CollideEnemyResult.Attack;
                 }
                 else

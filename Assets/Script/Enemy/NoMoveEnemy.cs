@@ -43,7 +43,7 @@ namespace Assets.Script.Enemy
             GameObject.Destroy(this.gameObject);
         }
 
-        public bool Killable()
+        public bool IsKillable()
         {
             return false;
         }
