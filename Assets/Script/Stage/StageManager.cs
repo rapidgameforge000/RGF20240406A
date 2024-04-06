@@ -22,6 +22,14 @@ namespace Assets.Script.Stage
 
         UnityEngine.Vector2 PushBackPosition(ICollision collision)
         {
+            foreach (var obstacle in this.obstacleList)
+            {
+                if (!ICollision.IsCollide(collision, obstacle))
+                {
+                    continue;
+                }
+
+            }
             return UnityEngine.Vector2.zero;
         }
 

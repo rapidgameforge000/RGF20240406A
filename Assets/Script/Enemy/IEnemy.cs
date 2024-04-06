@@ -1,4 +1,5 @@
-﻿using Assets.Script.Collision;
+﻿using Assets.Script.Character;
+using Assets.Script.Collision;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Script.Enemy
 {
-    internal interface IEnemy : ICollision
+    internal interface IEnemy : ICharacter
     {
-        void Process(float deltaTime);
     }
 }
