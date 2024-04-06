@@ -64,11 +64,11 @@ namespace Assets.Script.Stage
                 var nowRect = character.GetRect();
                 var oldRect = nowRect;
                 oldRect.position -= (character.GetVelocity() * this.deltaTime);
-                if (character.GetVelocity().y < 0 && obstacle.GetRect().yMax <= oldRect.yMin)
+                if (character.GetVelocity().y < 0 && obstacle.GetRect().yMax < oldRect.yMin && nowRect.yMin <= obstacle.GetRect().yMax)
                 {
                     // 着地
-                    var newPosition = nowRect.position;
-                    newPosition.y += obstacle.GetRect().yMax - nowRect.yMin - 0.01f;
+                    var newPosition = nowRect.center;
+                    newPosition.y += obstacle.GetRect().yMax - nowRect.yMin + 0.01f;
                     var newVelocity = character.GetVelocity();
                     newVelocity.y = 0;
                     character.SetPositionVelocity(newPosition, newVelocity);
@@ -79,7 +79,7 @@ namespace Assets.Script.Stage
                     if (0 < character.GetVelocity().x && oldRect.xMax < obstacle.GetRect().xMin && obstacle.GetRect().xMin <= nowRect.xMax)
                     {
                         // 左から衝突
-                        var newPosition = nowRect.position;
+                        var newPosition = nowRect.center;
                         newPosition.x += obstacle.GetRect().xMin - nowRect.xMax - 0.01f;
                         var newVelocity = character.GetVelocity();
                         newVelocity.x = 0;
@@ -89,8 +89,8 @@ namespace Assets.Script.Stage
                     else if (character.GetVelocity().x < 0 && obstacle.GetRect().xMax < oldRect.xMin && nowRect.xMin <= obstacle.GetRect().xMax)
                     {
                         // 右から衝突
-                        var newPosition = nowRect.position;
-                        newPosition.x += obstacle.GetRect().xMax - nowRect.xMin - 0.01f;
+                        var newPosition = nowRect.center;
+                        newPosition.x += obstacle.GetRect().xMax - nowRect.xMin + 0.01f;
                         var newVelocity = character.GetVelocity();
                         newVelocity.x = 0;
                         character.SetPositionVelocity(newPosition, newVelocity);
@@ -99,7 +99,7 @@ namespace Assets.Script.Stage
                     else if (0 < character.GetVelocity().y && oldRect.yMax < obstacle.GetRect().yMin && obstacle.GetRect().yMin <= nowRect.yMax)
                     {
                         // 下から衝突
-                        var newPosition = nowRect.position;
+                        var newPosition = nowRect.center;
                         newPosition.y += obstacle.GetRect().yMin - nowRect.yMax - 0.01f;
                         var newVelocity = character.GetVelocity();
                         newVelocity.y = 0;
@@ -113,9 +113,9 @@ namespace Assets.Script.Stage
 
         public CollideEnemyResult CollideEnemy(MainCharacter.MainCharacter character)
         {
-            foreach (var obstacle in this.obstacleList)
+            foreach (var enemy in this.obstacleList)
             {
-                if (!ICollision.IsCollide(character, obstacle))
+                if (!ICollision.IsCollide(character, enemy))
                 {
                     continue;
                 }
@@ -123,7 +123,7 @@ namespace Assets.Script.Stage
                 var nowRect = character.GetRect();
                 var oldRect = nowRect;
                 oldRect.position -= (character.GetVelocity() * this.deltaTime);
-                if (character.GetVelocity().y < 0 && obstacle.GetRect().yMax <= oldRect.yMin)
+                if (character.GetVelocity().y < 0 && enemy.GetRect().yMax < oldRect.yMin && nowRect.yMin <= enemy.GetRect().yMax)
                 {
                     // 着地
                     return CollideEnemyResult.Attack;
