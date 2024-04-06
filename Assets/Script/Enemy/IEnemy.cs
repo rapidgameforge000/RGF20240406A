@@ -13,5 +13,7 @@ namespace Assets.Script.Enemy
         void Initialize(ICollisionChecker checker);
 
         void Kill();
+
+        bool IsKillable();
     }
 }
