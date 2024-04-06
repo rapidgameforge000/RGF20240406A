@@ -52,7 +52,7 @@ namespace Assets.Script.Stage
             }
         }
 
-        public void CollideObstacle(ICharacter character)
+        public CollideObstacleResult CollideObstacle(ICharacter character)
         {
             foreach (var obstacle in this.obstacleList)
             {
@@ -72,6 +72,7 @@ namespace Assets.Script.Stage
                     var newVelocity = character.GetVelocity();
                     newVelocity.y = 0;
                     character.SetPositionVelocity(newPosition, newVelocity);
+                    return CollideObstacleResult.TopToBottom;
                 } else
                 {
                     // 衝突
@@ -83,6 +84,7 @@ namespace Assets.Script.Stage
                         var newVelocity = character.GetVelocity();
                         newVelocity.x = 0;
                         character.SetPositionVelocity(newPosition, newVelocity);
+                        return CollideObstacleResult.LeftToRight;
                     }
                     else if (character.GetVelocity().x < 0 && obstacle.GetRect().xMax < oldRect.xMin && nowRect.xMin <= obstacle.GetRect().xMax)
                     {
@@ -92,6 +94,7 @@ namespace Assets.Script.Stage
                         var newVelocity = character.GetVelocity();
                         newVelocity.x = 0;
                         character.SetPositionVelocity(newPosition, newVelocity);
+                        return CollideObstacleResult.RightToLeft;
                     }
                     else if (0 < character.GetVelocity().y && oldRect.yMax < obstacle.GetRect().yMin && obstacle.GetRect().yMin <= nowRect.yMax)
                     {
@@ -101,12 +104,14 @@ namespace Assets.Script.Stage
                         var newVelocity = character.GetVelocity();
                         newVelocity.y = 0;
                         character.SetPositionVelocity(newPosition, newVelocity);
+                        return CollideObstacleResult.BottomToTop;
                     }
                 }
             }
+            return CollideObstacleResult.None;
         }
 
-        public CollideResult CollideEnemy(MainCharacter.MainCharacter character)
+        public CollideEnemyResult CollideEnemy(MainCharacter.MainCharacter character)
         {
             foreach (var obstacle in this.obstacleList)
             {
@@ -121,14 +126,14 @@ namespace Assets.Script.Stage
                 if (character.GetVelocity().y < 0 && obstacle.GetRect().yMax <= oldRect.yMin)
                 {
                     // 着地
-                    return CollideResult.Attack;
+                    return CollideEnemyResult.Attack;
                 }
                 else
                 {
-                    return CollideResult.Hit;
+                    return CollideEnemyResult.Hit;
                 }
             }
-            return CollideResult.None;
+            return CollideEnemyResult.None;
         }
     }
 }
