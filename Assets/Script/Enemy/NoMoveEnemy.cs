@@ -3,14 +3,11 @@ using UnityEngine;
 
 namespace Assets.Script.Enemy
 {
-    public class KameEnemy : MonoBehaviour, IEnemy
+    public class NoMoveEnemy : MonoBehaviour, IEnemy
     {
         private RectTransform mRectTransform;
         private Vector2 mVelocity = Vector2.zero;
         private ICollisionChecker mCollisionChecker;
-
-        private const float MOVE_SPEED_X = -6000f;
-        private const float GRAVITY = -88.9f;
 
 
         public void Initialize(ICollisionChecker checker)
@@ -21,18 +18,6 @@ namespace Assets.Script.Enemy
 
         public void Process(float deltaTime)
         {
-            var localPosition = mRectTransform.localPosition;
-
-            // ‰¡ˆÚ“®
-            mVelocity.x = MOVE_SPEED_X * deltaTime;
-            localPosition.x = mRectTransform.localPosition.x + mVelocity.x * deltaTime;
-
-            // d—Í
-            mVelocity.y += GRAVITY * deltaTime;
-            localPosition.y = mRectTransform.localPosition.y + mVelocity.y * deltaTime;
-
-            mRectTransform.localPosition = localPosition;
-
             // ‰Ÿ‚µ‡‚¢”»’è
             mCollisionChecker.CollideObstacle(this);
         }
@@ -52,6 +37,7 @@ namespace Assets.Script.Enemy
 
         public Vector2 GetVelocity() => this.mVelocity;
 
+
         public void Kill()
         {
             GameObject.Destroy(this.gameObject);
@@ -59,7 +45,7 @@ namespace Assets.Script.Enemy
 
         public bool Killable()
         {
-            return true;
+            return false;
         }
     }
 }

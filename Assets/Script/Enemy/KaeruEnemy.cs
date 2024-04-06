@@ -50,5 +50,16 @@ namespace Assets.Script.Enemy
         }
 
         public Vector2 GetVelocity() => this.mVelocity;
+
+
+        public void Kill()
+        {
+            GameObject.Destroy(this.gameObject);
+        }
+
+        public bool Killable()
+        {
+            return true;
+        }
     }
 }
