@@ -1,34 +1,24 @@
 using Assets.Script.Collision;
-using System.Xml.Serialization;
 using UnityEngine;
 
 namespace Assets.Script.Enemy
 {
-    public class KaeruEnemy : MonoBehaviour, IEnemy
+    public class NoMoveEnemy : MonoBehaviour, IEnemy
     {
         private RectTransform mRectTransform;
         private Vector2 mVelocity = Vector2.zero;
         private ICollisionChecker mCollisionChecker;
 
-        private float GRAVITY = 150.0f;
-        private readonly UnityEngine.Vector2 JUMP_VELOCITY = new UnityEngine.Vector2(-150, 300);
 
-        public void Initialize(ICollisionChecker checker) {
-            mCollisionChecker = checker;
-        }
-
-        void Awake()
+        public void Initialize(ICollisionChecker checker)
         {
             mRectTransform = GetComponent<RectTransform>();
+            mCollisionChecker = checker;
         }
 
         public void Process(float deltaTime)
         {
-            UnityEngine.Vector2 position = transform.localPosition;
-            position += mVelocity * deltaTime;
-            transform.localPosition = position;
-            mVelocity.y -= GRAVITY * deltaTime;
-
+            // âüÇµçáÇ¢îªíË
             mCollisionChecker.CollideObstacle(this);
         }
 
@@ -41,12 +31,8 @@ namespace Assets.Script.Enemy
 
         public void SetPositionVelocity(Vector2 position, Vector2 velocity)
         {
-            mVelocity = velocity;
-            float diff = mRectTransform.position.y - position.y;
-            if ( diff < 0 && velocity.y == 0) {
-                mVelocity = JUMP_VELOCITY;
-            }
             mRectTransform.position = position;
+            mVelocity = velocity;
         }
 
         public Vector2 GetVelocity() => this.mVelocity;
@@ -59,7 +45,7 @@ namespace Assets.Script.Enemy
 
         public bool IsKillable()
         {
-            return true;
+            return false;
         }
     }
 }

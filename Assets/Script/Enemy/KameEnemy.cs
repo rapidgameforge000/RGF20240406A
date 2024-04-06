@@ -1,6 +1,4 @@
 using Assets.Script.Collision;
-using Assets.Script.Stage;
-using System.Xml.Serialization;
 using UnityEngine;
 
 namespace Assets.Script.Enemy
@@ -11,7 +9,7 @@ namespace Assets.Script.Enemy
         private Vector2 mVelocity = Vector2.zero;
         private ICollisionChecker mCollisionChecker;
 
-        private const float MOVE_SPEED_X = -15.5f;
+        private const float MOVE_SPEED_X = -6000f;
         private const float GRAVITY = -88.9f;
 
 
@@ -53,5 +51,15 @@ namespace Assets.Script.Enemy
         }
 
         public Vector2 GetVelocity() => this.mVelocity;
+
+        public void Kill()
+        {
+            GameObject.Destroy(this.gameObject);
+        }
+
+        public bool IsKillable()
+        {
+            return true;
+        }
     }
 }
