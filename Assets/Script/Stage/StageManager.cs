@@ -1,6 +1,7 @@
 ﻿using Assets.Script.Character;
 using Assets.Script.Collision;
 using Assets.Script.Enemy;
+using Assets.Script.Obstacle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,12 @@ namespace Assets.Script.Stage
         internal void Initialize(UnityEngine.Transform root)
         {
             this.root = root;
+
+            var stagePrefab = UnityEngine.Resources.Load<UnityEngine.GameObject>("Stage/stage_01");
+            var stage = UnityEngine.Object.Instantiate(stagePrefab, this.root, false);
+
+            obstacleList.AddRange(stage.GetComponentsInChildren<ObstacleObject>());
+            enemyList.AddRange(stage.GetComponentsInChildren<KameEnemy>());
         }
 
         internal void Process(float deltaTime)
@@ -27,6 +34,7 @@ namespace Assets.Script.Stage
             this.deltaTime = deltaTime;
             foreach (var enemy in this.enemyList)
             {
+                enemy.Process(deltaTime);
             }
         }
 

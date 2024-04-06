@@ -9,7 +9,7 @@ namespace Assets.Script.Enemy
         private RectTransform mRectTransform;
         private Vector2 mVelocity = Vector2.zero;
 
-        private const float MOVE_SPEED = -0.5f;
+        private const float MOVE_SPEED = -5.5f;
 
         void Awake()
         {
@@ -18,8 +18,9 @@ namespace Assets.Script.Enemy
 
         public void Process(float deltaTime)
         {
-            var posX = mRectTransform.localPosition.x + MOVE_SPEED * deltaTime;
-            mRectTransform.localPosition.Set(posX, mRectTransform.localPosition.y, mRectTransform.localPosition.z);
+            var localPosition = mRectTransform.localPosition;
+            localPosition.x = mRectTransform.localPosition.x + MOVE_SPEED * deltaTime;
+            mRectTransform.localPosition = localPosition;
         }
 
         public Rect GetRect()

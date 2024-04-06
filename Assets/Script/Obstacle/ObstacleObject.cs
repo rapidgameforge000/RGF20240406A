@@ -22,7 +22,7 @@ namespace Assets.Script.Obstacle
         }
 
         public UnityEngine.Rect GetRect() {
-            return GetComponent<UnityEngine.RectTransform>( ).rect;
+            return ((UnityEngine.RectTransform)this.transform).rect;
         }
 
     }
