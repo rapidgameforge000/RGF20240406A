@@ -1,4 +1,5 @@
 using Assets.Script.Collision;
+using Assets.Script.Stage;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -8,18 +9,31 @@ namespace Assets.Script.Enemy
     {
         private RectTransform mRectTransform;
         private Vector2 mVelocity = Vector2.zero;
+        private ICollisionChecker mCollisionChecker;
 
-        private const float MOVE_SPEED = -5.5f;
+        private float mYSpd = 0f;
 
-        void Awake()
+        private const float MOVE_SPEED_X = -15.5f;
+        private const float GRAVITY = -1.89f;
+
+
+        void Initialize(ICollisionChecker checker)
         {
             mRectTransform = GetComponent<RectTransform>();
+            mCollisionChecker = checker;
         }
 
         public void Process(float deltaTime)
         {
             var localPosition = mRectTransform.localPosition;
-            localPosition.x = mRectTransform.localPosition.x + MOVE_SPEED * deltaTime;
+
+            // â°à⁄ìÆ
+            localPosition.x = mRectTransform.localPosition.x + MOVE_SPEED_X * deltaTime;
+
+            // èdóÕ
+            mYSpd += GRAVITY;
+            localPosition.y = mRectTransform.localPosition.y + mYSpd  * deltaTime;
+            
             mRectTransform.localPosition = localPosition;
         }
 
