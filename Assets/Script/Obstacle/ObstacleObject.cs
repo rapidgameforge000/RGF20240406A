@@ -21,9 +21,6 @@ namespace Assets.Script.Obstacle
             
         }
 
-        public UnityEngine.Vector2 GetPosition() {
-            return transform.localPosition;             
-        }
         public UnityEngine.Rect GetRect() {
             return GetComponent<UnityEngine.RectTransform>( ).rect;
         }
