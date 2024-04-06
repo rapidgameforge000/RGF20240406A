@@ -11,11 +11,13 @@ namespace Assets.Script.Stage
 {
     internal class StageManager
     {
+        private float deltaTime;
         List<IEnemy> enemyList = new List<IEnemy>();
         List<ICollision> obstacleList = new List<ICollision>();
 
         internal void Process(float deltaTime)
         {
+            this.deltaTime = deltaTime;
             foreach (var enemy in this.enemyList)
             {
             }
@@ -30,8 +32,21 @@ namespace Assets.Script.Stage
                     continue;
                 }
 
+                var nowBottom = character.GetRect().yMin;
+                var oldBottom = nowBottom - character.GetVelocity().y * this.deltaTime;
+                if (obstacle.GetRect().yMax <= oldBottom)
+                {
+                    // 着地
+                    var newPosition = character.GetRect().position;
+                    newPosition.y += obstacle.GetRect().yMax - nowBottom;
+                    var newVelocity = character.GetVelocity();
+                    newVelocity.y = 0;
+                    character.SetPositionVelocity(newPosition, newVelocity);
+                } else
+                {
+
+                }
             }
-            return UnityEngine.Vector2.zero;
         }
 
     }
