@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Assets.Script.Stage
 {
-    internal class StageManager
+    internal class StageManager : ICollisionChecker
     {
         private UnityEngine.Transform root;
         private float deltaTime;
@@ -45,7 +45,7 @@ namespace Assets.Script.Stage
             }
         }
 
-        void CollideObstacle(ICharacter character)
+        public void CollideObstacle(ICharacter character)
         {
             foreach (var obstacle in this.obstacleList)
             {
@@ -54,18 +54,20 @@ namespace Assets.Script.Stage
                     continue;
                 }
 
-                var nowBottom = character.GetRect().yMin;
-                var oldBottom = nowBottom - character.GetVelocity().y * this.deltaTime;
-                if (obstacle.GetRect().yMax <= oldBottom)
+                var nowRect = character.GetRect();
+                var oldRect = nowRect;
+                oldRect.position -= (character.GetVelocity() * this.deltaTime);
+                if (obstacle.GetRect().yMax <= oldRect.yMin)
                 {
                     // 着地
-                    var newPosition = character.GetRect().position;
-                    newPosition.y += obstacle.GetRect().yMax - nowBottom;
+                    var newPosition = nowRect.position;
+                    newPosition.y += obstacle.GetRect().yMax - nowRect.yMin;
                     var newVelocity = character.GetVelocity();
                     newVelocity.y = 0;
                     character.SetPositionVelocity(newPosition, newVelocity);
                 } else
                 {
+                    // 衝突
 
                 }
             }
