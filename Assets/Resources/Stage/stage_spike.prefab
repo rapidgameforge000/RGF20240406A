@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2067654043730503576}
   m_Layer: 5
-  m_Name: stage_01
+  m_Name: stage_spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,7 +218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8316820343937130112, guid: 7307590ce61f13347a4a63a76cb0e527, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8316820343937130112, guid: 7307590ce61f13347a4a63a76cb0e527, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
