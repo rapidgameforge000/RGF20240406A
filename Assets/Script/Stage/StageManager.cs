@@ -1,4 +1,5 @@
-﻿using Assets.Script.Collision;
+﻿using Assets.Script.Character;
+using Assets.Script.Collision;
 using Assets.Script.Enemy;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,11 @@ namespace Assets.Script.Stage
             }
         }
 
-        UnityEngine.Vector2 PushBackPosition(ICollision collision)
+        void CollideObstacle(ICharacter character)
         {
             foreach (var obstacle in this.obstacleList)
             {
-                if (!ICollision.IsCollide(collision, obstacle))
+                if (!ICollision.IsCollide(character, obstacle))
                 {
                     continue;
                 }

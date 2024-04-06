@@ -9,6 +9,7 @@ namespace Assets.Script.Character
 {
     internal interface ICharacter : ICollision
     {
+        UnityEngine.Vector2 GetVelocity();
         void Process(float deltaTime);
         void SetPositionVelocity(UnityEngine.Vector2 position, UnityEngine.Vector2 velocity);
     }
