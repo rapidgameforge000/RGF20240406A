@@ -15,8 +15,8 @@ namespace Assets.Script.Collision
             var leftRect = left.GetRect();
             var rightRect = right.GetRect();
 
-            return leftRect.xMin <= rightRect.xMax && rightRect.xMin <= leftRect.yMax &&
-                leftRect.yMin <= rightRect.yMax && rightRect.yMin <= leftRect.yMax;
+            return leftRect.xMin <= rightRect.xMax && rightRect.xMin <= leftRect.xMax &&
+                   leftRect.yMin <= rightRect.yMax && rightRect.yMin <= leftRect.yMax;
         }
     }
 }

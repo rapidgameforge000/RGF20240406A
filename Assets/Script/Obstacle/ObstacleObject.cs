@@ -1,4 +1,5 @@
 using Assets.Script.Collision;
+using UnityEngine;
 
 namespace Assets.Script.Obstacle
 {
@@ -22,7 +23,9 @@ namespace Assets.Script.Obstacle
         }
 
         public UnityEngine.Rect GetRect() {
-            return ((UnityEngine.RectTransform)this.transform).rect;
+            var rect = ((UnityEngine.RectTransform)this.transform).rect;
+            rect.center += (UnityEngine.Vector2)this.transform.position;
+            return rect;
         }
 
     }
