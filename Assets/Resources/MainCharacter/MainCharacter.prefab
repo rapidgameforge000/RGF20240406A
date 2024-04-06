@@ -89,11 +89,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MOVE_VELOCITY: 550
-  JUMP_VELOCITY: 12000
+  JUMP_VELOCITY: 15000
   BRAKE_VELOCITY: 350
   MAX_VELOCITY: 300
   GRAVITY: 200
   velocity: {x: 0, y: 0}
-  jumpCount: 0
-  maxJumpCount: 25
   isGround: 0
