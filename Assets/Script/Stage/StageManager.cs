@@ -50,6 +50,10 @@ namespace Assets.Script.Stage
             {
                 enemy.Process(deltaTime);
             }
+
+            var rootPosition = this.root.position;
+            rootPosition.x = -this.mainCharacter.transform.localPosition.x + 1920 / 2;
+            this.root.position = rootPosition;
         }
 
         public CollideObstacleResult CollideObstacle(ICharacter character)
@@ -130,7 +134,9 @@ namespace Assets.Script.Stage
                 }
                 else
                 {
-                    return CollideEnemyResult.Hit;
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScene");
+                    //return CollideEnemyResult.Hit;
+                    return CollideEnemyResult.None;
                 }
             }
             return CollideEnemyResult.None;
