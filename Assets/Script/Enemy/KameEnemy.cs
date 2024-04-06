@@ -11,10 +11,8 @@ namespace Assets.Script.Enemy
         private Vector2 mVelocity = Vector2.zero;
         private ICollisionChecker mCollisionChecker;
 
-        private float mYSpd = 0f;
-
         private const float MOVE_SPEED_X = -15.5f;
-        private const float GRAVITY = -1.89f;
+        private const float GRAVITY = -0.89f;
 
 
         public void Initialize(ICollisionChecker checker)
@@ -28,13 +26,17 @@ namespace Assets.Script.Enemy
             var localPosition = mRectTransform.localPosition;
 
             // ‰¡ˆÚ“®
-            localPosition.x = mRectTransform.localPosition.x + MOVE_SPEED_X * deltaTime;
+            mVelocity.x = MOVE_SPEED_X * deltaTime;
+            localPosition.x = mRectTransform.localPosition.x + mVelocity.x;
 
             // d—Í
-            mYSpd += GRAVITY;
-            localPosition.y = mRectTransform.localPosition.y + mYSpd  * deltaTime;
-            
+            mVelocity.y += GRAVITY * deltaTime;
+            localPosition.y = mRectTransform.localPosition.y + mVelocity.y;
+
             mRectTransform.localPosition = localPosition;
+
+            // ‰Ÿ‚µ‡‚¢”»’è
+            mCollisionChecker.CollideObstacle(this);
         }
 
         public Rect GetRect()
@@ -45,7 +47,7 @@ namespace Assets.Script.Enemy
         public void SetPositionVelocity(Vector2 position, Vector2 velocity)
         {
             mRectTransform.position = position;
-            mVelocity += velocity;
+            mVelocity = velocity;
         }
 
         public Vector2 GetVelocity() => this.mVelocity;
