@@ -16,6 +16,7 @@ namespace Assets.Script.Stage
     {
         private UnityEngine.Transform root;
         private float deltaTime;
+        private bool isFinish = false;
 
         private MainCharacter.MainCharacter mainCharacter;
         List<IEnemy> enemyList = new List<IEnemy>();
@@ -26,6 +27,7 @@ namespace Assets.Script.Stage
             this.root = root;
 
             string[] stageNameList = {
+                "Stage/stage_start",
                 "Stage/stage_01",
                 "Stage/stage_kame",
                 "Stage/stage_goal",
@@ -149,7 +151,9 @@ namespace Assets.Script.Stage
                 }
                 else
                 {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScene");
+                    if (!this.isFinish) {
+                        UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScene");
+                    }
                     //return CollideEnemyResult.Hit;
                     return CollideEnemyResult.None;
                 }
